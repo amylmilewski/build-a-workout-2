@@ -2,12 +2,14 @@
 require('dotenv').config()
 
 const express = require('express')
+const cors = require('cors');
 const mongoose = require('mongoose')
 const workoutRoutes = require('./routes/workouts')
 
 const app = express()
 
 // global middleware that fires for every request that comes in
+app.use(cors()); // Enables CORS for all routes and origins
 app.use(express.json())
 
 app.use((req, res, next) => {
