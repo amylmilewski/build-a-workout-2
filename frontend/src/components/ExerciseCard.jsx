@@ -1,11 +1,11 @@
-export default function ExerciseCard ({ workout }) {
+export default function ExerciseCard ({ exercise }) {
     return (
         <>
             <div className="card">
-                <h2>{workout.title}</h2>
-                <p><strong>Sets: </strong>{workout.sets}</p>
-                <p><strong>Reps: </strong>{workout.reps}</p>
-                <p><strong>Load (lb): </strong>{workout.load}</p>
+                <h2>{exercise.title}</h2>
+                <p><strong>Sets: </strong>{exercise.sets}</p>
+                <p><strong>Reps: </strong>{exercise.reps}</p>
+                <p><strong>Load (lb): </strong>{exercise.load}</p>
             </div>
         </>
     )

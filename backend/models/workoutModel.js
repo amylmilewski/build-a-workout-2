@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-// this schema defines the structure of a particular workout document saved to the collection
-const workoutSchema = new Schema({
+// this schema defines the structure of a particular exercise document saved to the collection
+const exerciseSchema = new Schema({
     title: {
         type: String,
         required: true
@@ -22,5 +22,5 @@ const workoutSchema = new Schema({
     }
 }, { timestamps: true })
 
-// this model applies the workout schema and this is what methods are used on
-module.exports = mongoose.model('Workout', workoutSchema)
+// this model applies the exercise schema and this is what methods are used on
+module.exports = mongoose.model('Exercise', exerciseSchema)

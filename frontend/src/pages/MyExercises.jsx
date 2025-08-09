@@ -5,19 +5,19 @@ import { useEffect, useState } from 'react';
 import ExerciseCard from '../components/ExerciseCard'
 
 export default function MyExercises() {
-    const [workouts, setWorkouts] = useState(null);
+    const [exercises, setExercises] = useState(null);
     
     useEffect(() => {
-        const fetchWorkouts = async () => {
-            const response = await fetch('http://localhost:4000/api/workouts/')
+        const fetchExercises = async () => {
+            const response = await fetch('http://localhost:4000/api/exercises/')
             const json = await response.json()
 
             if (response.ok) {
-                setWorkouts(json)
+                setExercises(json)
             }
         }
 
-        fetchWorkouts()
+        fetchExercises()
     }, [])
 
     return (
@@ -26,8 +26,8 @@ export default function MyExercises() {
             <h1 className='page-title'>Exercises</h1>
             <main>
                 <div>
-                    {workouts && workouts.map((workout) => (
-                        <ExerciseCard key={workout._id} workout={workout} />
+                    {exercises && exercises.map((exercise) => (
+                        <ExerciseCard key={exercise._id} exercise={exercise} />
                     ))}
                 </div>
             </main>
