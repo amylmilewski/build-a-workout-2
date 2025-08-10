@@ -23,4 +23,7 @@ const exerciseSchema = new Schema({
 }, { timestamps: true })
 
 // this model applies the exercise schema and this is what methods are used on
-module.exports = mongoose.model('Exercise', exerciseSchema)
+module.exports = {
+    Exercise: mongoose.model('Exercise', exerciseSchema),
+    exerciseSchema
+}    

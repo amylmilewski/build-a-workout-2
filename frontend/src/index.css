@@ -72,8 +72,13 @@ main {
   border-radius: 8px;
   padding: 1.25rem;
   margin-bottom: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   position: relative;
+}
+
+.card h1 {
+  margin-bottom: 0.5rem;
+  margin-right: 2.5rem;
 }
 
 .card h2 {
@@ -104,7 +109,8 @@ main {
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  max-width: 300px;
+  height: auto; /* let it size to its content */
+  align-self: flex-start; /* prevents stretching to match neighbor height */
 }
 
 .form-panel h2 {
@@ -120,6 +126,15 @@ form label {
 }
 
 form input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+form select {
   width: 100%;
   padding: 0.5rem;
   border: 1px solid #d1d5db;

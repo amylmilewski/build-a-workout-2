@@ -1,4 +1,3 @@
-import { Link, NavLink } from 'react-router-dom'
 import Navbar from '../components/Navbar';
 import { useEffect, useState } from 'react';
 import useExercisesContext from '../hooks/useExercisesContext'
