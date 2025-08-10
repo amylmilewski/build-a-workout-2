@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import { useEffect, useState } from 'react';
 
 import ExerciseCard from '../components/ExerciseCard'
+import ExerciseForm from '../components/ExerciseForm';
 
 export default function MyExercises() {
     const [exercises, setExercises] = useState(null);
@@ -30,7 +31,9 @@ export default function MyExercises() {
                         <ExerciseCard key={exercise._id} exercise={exercise} />
                     ))}
                 </div>
+                <ExerciseForm />
             </main>
+            
         </>
     )
 }
