@@ -8,6 +8,7 @@ export default function ExerciseForm () {
     const [reps, setReps] = useState('');
     const [load, setLoad] = useState('');
     const [error, setError] = useState(null);
+    const [emptyFields, setEmptyFields] = useState([]);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -25,6 +26,7 @@ export default function ExerciseForm () {
 
         if (!response.ok) {
             setError(json.error)
+            setEmptyFields(json.emptyFields)
         }
         if (response.ok) {
             setTitle('')
@@ -32,6 +34,7 @@ export default function ExerciseForm () {
             setReps('')
             setLoad('')
             setError(null)
+            setEmptyFields([])
             console.log('new exercise added', json)
             dispatch({type: 'CREATE_EXERCISE', payload: json})
         }
@@ -46,6 +49,7 @@ export default function ExerciseForm () {
                 type="text"
                 onChange={(e) => setTitle(e.target.value)}
                 value={title} 
+                className={emptyFields.includes('title') ? 'error' : ''}
             />
 
             <label>Number of Sets:</label>
@@ -54,6 +58,7 @@ export default function ExerciseForm () {
                 min="0"
                 onChange={(e) => setSets(e.target.value)}
                 value={sets} 
+                className={emptyFields.includes('sets') ? 'error' : ''}
             />
 
             <label>Number of Reps (per set):</label>
@@ -62,6 +67,7 @@ export default function ExerciseForm () {
                 min="0"
                 onChange={(e) => setReps(e.target.value)}
                 value={reps} 
+                className={emptyFields.includes('reps') ? 'error' : ''}
             />
 
             <label>Load (lb):</label>
@@ -71,6 +77,7 @@ export default function ExerciseForm () {
                 step="0.01"
                 onChange={(e) => setLoad(e.target.value)}
                 value={load} 
+                className={emptyFields.includes('load') ? 'error' : ''}
             />
 
             <button>Add Exercise</button>

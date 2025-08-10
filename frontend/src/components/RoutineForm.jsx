@@ -8,6 +8,7 @@ export default function RoutineForm () {
     const [title, setTitle] = useState('');
     const [selectedExercises, setSelectedExercises] = useState([]);
     const [error, setError] = useState(null);
+    const [emptyFields, setEmptyFields] = useState([]);
 
     // To ensure that the form repopulates the existing exercise list after form submission, fetch exercises if the global exercises list is empty or null
     useEffect(() => {
@@ -35,11 +36,13 @@ export default function RoutineForm () {
 
         if (!response.ok) {
             setError(json.error)
+            setEmptyFields(json.emptyFields)
         }
         if (response.ok) {
             setTitle('')
             setSelectedExercises([])
             setError(null)
+            setEmptyFields([])
             console.log('new routine added', json)
             dispatch({type: 'CREATE_ROUTINE', payload: json})
         }
@@ -53,7 +56,8 @@ export default function RoutineForm () {
             <input 
                 type="text"
                 onChange={(e) => setTitle(e.target.value)}
-                value={title} 
+                value={title}
+                className={emptyFields.includes('title') ? 'error' : ''} 
             />
 
             <label>Exercises:</label>
@@ -70,7 +74,7 @@ export default function RoutineForm () {
                     <option key={exercise._id} value={exercise._id}>{exercise.title}</option>
                 ))}
             </select>
-
+           
             <button>Create Routine</button>
             {error && <div>{error}</div>}
         </form>

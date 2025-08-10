@@ -33,6 +33,24 @@ const getExercise = async (req, res) => {
 const createExercise = async (req, res) => {
     const {title, sets, reps, load} = req.body
 
+    let emptyFields = []
+
+    if (!title) {
+        emptyFields.push('title')
+    }
+    if (!sets) {
+        emptyFields.push('sets')
+    }
+    if (!reps) {
+        emptyFields.push('reps')
+    }
+    if (!load) {
+        emptyFields.push('load')
+    }
+    if (emptyFields.length > 0) {
+        return res.status(400).json({error: 'Please fill in all the fields', emptyFields})
+    }
+
     // adding document to db
     try {
         const exercise = await Exercise.create({title, sets, reps, load}) // applying a method to the Exercise model to create a new document

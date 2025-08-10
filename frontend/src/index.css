@@ -158,6 +158,10 @@ form button:hover {
   background-color: #a5542e;
 }
 
+input.error {
+  border: 1px solid red;
+}
+
 /* Login screen matches card styling */
 .login-container {
   max-width: 400px;

@@ -35,6 +35,15 @@ const getRoutine = async (req, res) => {
 const createRoutine = async (req, res) => {
     const {title, exercises} = req.body
 
+    let emptyFields = []
+
+    if (!title) {
+        emptyFields.push('title')
+    }
+    if (emptyFields.length > 0) {
+        return res.status(400).json({error: 'Please fill in all the fields', emptyFields})
+    }
+
     // adding document to db
     try {
         const routine = await Routine.create({title, exercises})
