@@ -1,12 +1,13 @@
 import { Link, NavLink } from 'react-router-dom'
 import Navbar from '../components/Navbar';
 import { useEffect, useState } from 'react';
+import useExercisesContext from '../hooks/useExercisesContext'
 
 import ExerciseCard from '../components/ExerciseCard'
 import ExerciseForm from '../components/ExerciseForm';
 
 export default function MyExercises() {
-    const [exercises, setExercises] = useState(null);
+    const {exercises, dispatch} = useExercisesContext()
     
     useEffect(() => {
         const fetchExercises = async () => {
@@ -14,7 +15,7 @@ export default function MyExercises() {
             const json = await response.json()
 
             if (response.ok) {
-                setExercises(json)
+                dispatch({type: 'SET_EXERCISES', payload: json})
             }
         }
 

@@ -5,6 +5,7 @@ import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import MyExercises from './pages/MyExercises.jsx'
 import MyRoutines from './pages/MyRoutines.jsx'
+import { ExercisesContextProvider } from './context/ExerciseContext.jsx'
 
 
 const router = createBrowserRouter([
@@ -25,6 +26,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ExercisesContextProvider>
+      <RouterProvider router={router} />
+    </ExercisesContextProvider>
   </StrictMode>,
 );

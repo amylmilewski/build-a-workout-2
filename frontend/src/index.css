@@ -65,12 +65,29 @@ main {
   padding: 1.25rem;
   margin-bottom: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: relative;
 }
 
 .card h2 {
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
+  margin-right: 2.5rem;
+}
+
+.card button {
+  position: absolute;
+  top: 1.25rem;   /* matches card padding */
+  right: 1.25rem; /* matches card padding */
+  background-color: transparent;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #9ca3af; 
+}
+
+.card button:hover {
+  color: #c2683a; /* accent color on hover */
 }
 
 /* Form panel */

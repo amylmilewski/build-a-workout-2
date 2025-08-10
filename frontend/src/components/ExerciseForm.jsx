@@ -1,6 +1,8 @@
 import { useState } from "react"
+import useExercisesContext from '../hooks/useExercisesContext'
 
 export default function ExerciseForm () {
+    const { dispatch } = useExercisesContext()
     const [title, setTitle] = useState('');
     const [sets, setSets] = useState('');
     const [reps, setReps] = useState('');
@@ -31,6 +33,7 @@ export default function ExerciseForm () {
             setLoad('')
             setError(null)
             console.log('new exercise added', json)
+            dispatch({type: 'CREATE_EXERCISE', payload: json})
         }
     }
 
@@ -48,6 +51,7 @@ export default function ExerciseForm () {
             <label>Number of Sets:</label>
             <input 
                 type="number"
+                min="0"
                 onChange={(e) => setSets(e.target.value)}
                 value={sets} 
             />
@@ -55,6 +59,7 @@ export default function ExerciseForm () {
             <label>Number of Reps (per set):</label>
             <input 
                 type="number"
+                min="0"
                 onChange={(e) => setReps(e.target.value)}
                 value={reps} 
             />
@@ -62,6 +67,8 @@ export default function ExerciseForm () {
             <label>Load (lb):</label>
             <input 
                 type="number"
+                min="0"
+                step="0.01"
                 onChange={(e) => setLoad(e.target.value)}
                 value={load} 
             />
