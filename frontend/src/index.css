@@ -21,17 +21,25 @@ header {
   align-items: center;
 }
 
-header h1 {
-  color: white;
-  font-size: 1.75rem;
-  font-weight: 700;
+.site-title {
+  display: inline-flex; /* keeps them next to each other */
+  align-items: center;  /* vertically aligns the logo with the text */
+  text-decoration: none; /* remove link underline */
 }
 
-.site-title {
-  color: white;
+.site-title h1 {
+  display: flex;         /* keeps image + text together */
+  align-items: center;   /* centers logo with text baseline */
   font-size: 1.75rem;
   font-weight: 700;
-  text-decoration: none;
+  color: white;
+  margin: 0;             /* reset default h1 margins */
+}
+
+.site-title img {
+  height: 2.5em;         /* scales with text size */
+  width: auto;           /* keep aspect ratio */
+  margin-right: 0.5rem;  /* spacing between logo and text */
 }
 
 nav a {
