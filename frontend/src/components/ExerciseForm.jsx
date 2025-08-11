@@ -42,7 +42,7 @@ export default function ExerciseForm () {
 
     return (
         <form className="form-panel" onSubmit={handleSubmit}>
-            <h2>Add a New Exercise</h2>
+            <h1>Add a New Exercise</h1>
 
             <label>Exercise Title:</label>
             <input 

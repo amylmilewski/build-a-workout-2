@@ -50,7 +50,7 @@ export default function RoutineForm () {
 
     return (
         <form className="form-panel" onSubmit={handleSubmit}>
-            <h2>Create a New Routine</h2>
+            <h1>Create a New Routine</h1>
 
             <label>Routine Title:</label>
             <input 

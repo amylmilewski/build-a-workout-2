@@ -24,7 +24,7 @@ export default function MyExercises() {
     return (
         <>
             <Navbar />
-            <h1 className='page-title'>Exercises</h1>
+            {/*<h1 className='page-title'>Exercises</h1>*/}
             <main>
                 <div>
                     {exercises && exercises.map((exercise) => (

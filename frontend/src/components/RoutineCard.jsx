@@ -18,11 +18,11 @@ export default function RoutineCard ({ routine }) {
 
     return (
         <>
-            <div className="card">
+            <div className="card routine-card">
                 <h1>{routine.title}</h1>
                 <div>
                     {exercises.map((exercise) => (
-                        <div className="card" key={exercise._id}>
+                        <div className="card exercise-card" key={exercise._id}>
                             <h2>{exercise.title}</h2>
                             <p><strong>Sets: </strong>{exercise.sets}</p>
                             <p><strong>Reps: </strong>{exercise.reps}</p>

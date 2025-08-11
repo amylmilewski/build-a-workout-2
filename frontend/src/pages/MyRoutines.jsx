@@ -25,7 +25,7 @@ export default function MyRoutines() {
     return (
        <>
             <Navbar />
-            <h1 className='page-title'>Routines</h1>
+            {/*<h1 className='page-title'>Routines</h1>*/}
             <main>
                 <div>
                     {routines && routines.map((routine) => (
