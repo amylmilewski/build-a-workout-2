@@ -8,6 +8,10 @@ export default function Navbar () {
                 <nav>
                 <NavLink to='/myroutines'>My Routines</NavLink>
                 <NavLink to='/myexercises'>My Exercises</NavLink>
+                <div>
+                    <NavLink to='/login'>Login</NavLink>
+                    <NavLink to='/signup'>Signup</NavLink>
+                </div>
                 </nav>
             </header>
         </>
