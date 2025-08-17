@@ -36,7 +36,6 @@ function App() {
             <ul>
               <li>Go to the “Exercises” page and add a few moves you’d like to include.</li>
               <li>For each exercise, you can enter: <strong>Title, Sets, Reps, and Load (weight in lbs)</strong>.</li>
-              <li>You’ll see a couple of sample exercises already loaded — feel free to use them, or delete them and start fresh.</li>
             </ul>
           </div>
 
@@ -78,7 +77,6 @@ function App() {
           <ul>
             <li>Right now, routines and exercises can be <strong>created or deleted</strong>, but not edited (yet). Updates are on the way!</li>
             <li>You’ll always need to be logged in to add or save exercises and routines.</li>
-            <li>The sample data is just there to give you an idea — don’t be shy about clearing it out and making this space your own.</li>
           </ul>
         </section>
       </main>
