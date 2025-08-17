@@ -6,9 +6,12 @@ const {
     deleteRoutine,
     updateRoutine
 } = require('../controllers/routineController')
+const requireAuth = require('../middleware/requireAuth')
 
 // creates an instance of the express router
 const router = express.Router()
+
+router.use(requireAuth) // need to fire this middleware function before any other routes so that all routes are protected
 
 // these are relative routes because in server.js we specified to only fire these routes when we come to a specific path ('/api/routines')
 

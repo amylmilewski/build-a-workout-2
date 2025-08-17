@@ -1,7 +1,9 @@
 import Navbar from '../components/Navbar'
 import { useEffect, useState } from 'react';
 import useRoutinesContext from '../hooks/useRoutinesContext';
+import useAuthContext from '../hooks/useAuthContext';
 
+// components
 import RoutineCard from '../components/RoutineCard';
 import RoutineForm from '../components/RoutineForm';
 
@@ -9,9 +11,16 @@ import RoutineForm from '../components/RoutineForm';
 export default function MyRoutines() {
     const {routines, dispatch} = useRoutinesContext()
     
+    const { user } = useAuthContext() 
+
     useEffect(() => {
         const fetchRoutines = async () => {
-            const response = await fetch('http://localhost:4000/api/routines/')
+            const response = await fetch('http://localhost:4000/api/routines/', {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            
             const json = await response.json()
 
             if (response.ok) {
@@ -19,8 +28,10 @@ export default function MyRoutines() {
             }
         }
 
-        fetchRoutines()
-    }, [])
+        if (user) {
+            fetchRoutines() // only attempt to fetch the routines if there's a value for the user
+        }
+    }, [dispatch, user])
     
     return (
        <>
@@ -32,7 +43,7 @@ export default function MyRoutines() {
                         <RoutineCard key={routine._id} routine={routine} />
                     ))}
                 </div>
-                <RoutineForm />
+                {user && <RoutineForm />}
             </main>
        </>
     )

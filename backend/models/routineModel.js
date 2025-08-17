@@ -9,6 +9,10 @@ const routineSchema = new Schema({
         type: String,
         required: true
     },
+    user_id: {
+        type: String,
+        required: true
+    },
     exercises: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Exercise'}] 
 }, { timestamps: true })
 

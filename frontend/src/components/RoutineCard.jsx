@@ -1,11 +1,20 @@
 import useRoutinesContext from "../hooks/useRoutinesContext"
+import useAuthContext from "../hooks/useAuthContext"
 
 export default function RoutineCard ({ routine }) {
     const { dispatch } = useRoutinesContext()
+    const { user } = useAuthContext()
     
     const handleClick = async () => {
+        if (!user) {
+            return
+        }
+        
         const response = await fetch('http://localhost:4000/api/routines/' + routine._id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         })
         const json = await response.json()
 

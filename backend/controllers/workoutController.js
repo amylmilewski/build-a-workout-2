@@ -3,7 +3,9 @@ const mongoose = require('mongoose')
 
 // GET all exercises
 const getExercises = async (req, res) => {
-    const exercises = await Exercise.find({}).sort({createdAt: -1}) // we need to pass a blank object here so it will get all of the documents from the collection
+    const user_id = req.user._id
+    
+    const exercises = await Exercise.find({ user_id }).sort({createdAt: -1}) // we need to pass a blank object here so it will get all of the documents from the collection
     // '.sort({createdAt: -1})' makes it so the newest entries are listed at the top
 
     res.status(200).json(exercises)
@@ -53,7 +55,8 @@ const createExercise = async (req, res) => {
 
     // adding document to db
     try {
-        const exercise = await Exercise.create({title, sets, reps, load}) // applying a method to the Exercise model to create a new document
+        const user_id = req.user._id
+        const exercise = await Exercise.create({title, sets, reps, load, user_id}) // applying a method to the Exercise model to create a new document
         // this exercise object represents the document that was just created
         res.status(200).json(exercise)
     } catch (error) {

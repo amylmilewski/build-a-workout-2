@@ -32,7 +32,7 @@ export const exercisesReducer = (state, action) => {
 // therefore, all components will have access to the ExercisesContext context
 export const ExercisesContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(exercisesReducer, {
-        exercises: null
+        exercises: []
     })
 
     return (

@@ -1,8 +1,11 @@
 import { useState } from "react"
 import useExercisesContext from '../hooks/useExercisesContext'
+import useAuthContext from "../hooks/useAuthContext";
 
 export default function ExerciseForm () {
     const { dispatch } = useExercisesContext()
+    const { user } = useAuthContext()
+
     const [title, setTitle] = useState('');
     const [sets, setSets] = useState('');
     const [reps, setReps] = useState('');
@@ -13,20 +16,26 @@ export default function ExerciseForm () {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const exercise = {title, sets, reps, load}
+        if (!user) {
+            setError('You must be logged in')
+            return
+        }
+
+        const exercise = {title, sets, reps, load, user_id: user._id}
 
         const response = await fetch('http://localhost:4000/api/exercises', {
          method: 'POST',
          body: JSON.stringify(exercise),
          headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`
          }   
         })
         const json = await response.json()
 
         if (!response.ok) {
             setError(json.error)
-            setEmptyFields(json.emptyFields)
+            setEmptyFields(Array.isArray(json.emptyFields) ? json.emptyFields : [])
         }
         if (response.ok) {
             setTitle('')
@@ -81,7 +90,7 @@ export default function ExerciseForm () {
             />
 
             <button>Add Exercise</button>
-            {error && <div>{error}</div>}
+            {error && <div className="error">{error}</div>}
         </form>
     )
 }

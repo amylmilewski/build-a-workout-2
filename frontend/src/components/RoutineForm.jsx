@@ -1,42 +1,67 @@
 import { useState, useEffect } from "react";
 import useRoutinesContext from "../hooks/useRoutinesContext";
 import useExercisesContext from "../hooks/useExercisesContext";
+import useAuthContext from "../hooks/useAuthContext";
 
 export default function RoutineForm () {
     const { dispatch } = useRoutinesContext()
+    const { user } = useAuthContext()
+
     const { exercises, dispatch: dispatchExercises } = useExercisesContext()
     const [title, setTitle] = useState('');
     const [selectedExercises, setSelectedExercises] = useState([]);
     const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const [emptyFields, setEmptyFields] = useState([]);
 
     // To ensure that the form repopulates the existing exercise list after form submission, fetch exercises if the global exercises list is empty or null
     useEffect(() => {
-        if (!exercises || exercises.length === 0) {
-            fetch('http://localhost:4000/api/exercises')
+        if (!user || !user.token) return; // wait until fully authenticated
+
+        if (!Array.isArray(exercises) || exercises.length === 0) { // guard with Array.isArray(exercises) before mapping to prevent the "map is not a function" crash 
+            setIsLoading(true);
+            fetch('http://localhost:4000/api/exercises', {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
             .then(res => res.json())
-            .then(data => dispatchExercises({ type: 'SET_EXERCISES', payload: data }))
-            .catch(err => console.error('Failed to load exercises', err));
+            .then(data => {
+                dispatchExercises({ type: 'SET_EXERCISES', payload: data });
+                setIsLoading(false);
+            })
+            .catch(err => {
+                console.error('Failed to load exercises', err);
+                setIsLoading(false);
+            });
+        } else {
+            setIsLoading(false); // Already have exercises in context
         }
-    }, [exercises, dispatchExercises]);
+    }, [user, exercises, dispatchExercises]);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const routine = {title, exercises: selectedExercises}
+        if (!user) {
+            setError('You must be logged in')
+            return
+        }
+
+        const routine = {title, user_id: user._id, exercises: selectedExercises};
 
         const response = await fetch('http://localhost:4000/api/routines', {
          method: 'POST',
          body: JSON.stringify(routine),
          headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`
          }   
-        })
-        const json = await response.json()
+        });
+        const json = await response.json();
 
         if (!response.ok) {
-            setError(json.error)
-            setEmptyFields(json.emptyFields)
+            setError(json.error);
+            setEmptyFields(json.emptyFields);
         }
         if (response.ok) {
             setTitle('')
@@ -44,9 +69,9 @@ export default function RoutineForm () {
             setError(null)
             setEmptyFields([])
             console.log('new routine added', json)
-            dispatch({type: 'CREATE_ROUTINE', payload: json})
+            dispatch({type: 'CREATE_ROUTINE', payload: json});
         }
-    }
+    };
 
     return (
         <form className="form-panel" onSubmit={handleSubmit}>
@@ -61,22 +86,25 @@ export default function RoutineForm () {
             />
 
             <label>Exercises:</label>
-            <select
-                name="exercises"
-                multiple
-                onChange={(e) => {
-                    const selectedOptions = Array.from(e.target.selectedOptions)
-                    const selectedValues = selectedOptions.map(option => option.value)
-                    setSelectedExercises(selectedValues)
-                }}
-            >
-                {(exercises || []).map(exercise => ( // using ' || []' to ensure that exercise is always an array before calling .map on it (). When the context provider initializes, exercises might be null or undefined initially before the data is fetched.The component renders once immediately, so if you try .map before the data is loaded, you get the error.
-                    <option key={exercise._id} value={exercise._id}>{exercise.title}</option>
-                ))}
-            </select>
-           
+            {isLoading ? (
+                <p>Loading exercises...</p> // NEW: loading message
+            ) : (
+                <select
+                    name="exercises"
+                    multiple
+                    onChange={(e) => {
+                        const selectedOptions = Array.from(e.target.selectedOptions)
+                        const selectedValues = selectedOptions.map(option => option.value)
+                        setSelectedExercises(selectedValues);
+                    }}
+                >
+                    {Array.isArray(exercises) && exercises.map(exercise => ( // guard with 'Array.isArray(exercises)' before mapping to prevent the "map is not a function" crash
+                        <option key={exercise._id} value={exercise._id}>{exercise.title}</option>
+                    ))}
+                </select>
+            )}
             <button>Create Routine</button>
-            {error && <div>{error}</div>}
+            {error && <div className="error">{error}</div>}
         </form>
     )
 }

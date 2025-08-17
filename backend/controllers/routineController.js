@@ -3,7 +3,9 @@ const mongoose = require('mongoose')
 
 // GET all routines
 const getRoutines = async (req, res) => {
-    const routines = await Routine.find({})
+    const user_id = req.user._id
+    
+    const routines = await Routine.find({ user_id })
         .sort({createdAt: -1}) // we need to pass a blank object here so it will get all of the documents from the collection
         // '.sort({createdAt: -1})' makes it so the newest entries are listed at the top
         .populate('exercises')
@@ -46,7 +48,8 @@ const createRoutine = async (req, res) => {
 
     // adding document to db
     try {
-        const routine = await Routine.create({title, exercises})
+        const user_id = req.user._id
+        const routine = await Routine.create({title, user_id, exercises})
         const populatedRoutine = await routine.populate('exercises')
         // ensures the routine's exercises are populated before returning the new routine document
         res.status(200).json(populatedRoutine)

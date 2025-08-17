@@ -58,7 +58,28 @@ nav a:hover {
   text-decoration: underline;
 }
 
-/* Main layout */
+nav span {
+  color: #dfad93;
+  margin-left: 1.5rem;
+  font-weight: 500;
+}
+
+nav button {
+  padding: 0.5rem;
+  background-color: #c2683a;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 1.5rem;
+}
+
+nav button:hover {
+  background-color: #a5542e;
+}
+
+/* Pages layout */
 main {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -70,6 +91,77 @@ main {
   gap: 2rem;
   padding: 2rem;
   font-style: italic;
+}
+
+/* Getting Started layout */
+main.getting-started {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem; /* space between sections */
+  padding: 2rem;
+}
+
+.getting-started .page-title {
+  gap: 2rem;
+  padding: 2rem;
+  font-style: italic;
+}
+
+.getting-started ol {
+  padding-left: 20px;
+}
+
+.getting-started ul {
+  padding-left: 20px;
+}
+
+.getting-started h2, h3 {
+  padding-bottom: 10px;
+}
+
+.getting-started .full-width {
+  width: 100%;
+}
+
+/* Two-column section (Steps + GIF) */
+.getting-started .two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 2rem;
+  align-items: start; /* keeps text and gif aligned at the top */
+  margin-bottom: 2rem;
+}
+
+/* Steps column */
+.getting-started .step-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Gif column */
+.getting-started .gif-column {
+  display: flex;
+  justify-content: center; /* center the gif horizontally */
+  align-items: flex-start;
+}
+
+/* Image styling */
+.getting-started .tutorial-gif {
+  width: 100%;        /* fills its column */
+  /* max-width: 500px; */
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+@media (max-width: 768px) {
+  .getting-started .two-column {
+    grid-template-columns: 1fr; /* stack vertically */
+  }
+  .getting-started .gif-column {
+    margin-top: 1rem;
+  }
 }
 
 /* Cards for routines/exercises */
@@ -193,4 +285,16 @@ input.error {
 
 .login-container .card {
   background-color: white;
+}
+
+div.error {
+  border: 2px solid red;
+  background-color: rgb(255, 206, 206);
+  padding: 0.5rem;
+  margin-top: 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  color: red;
+  font-size: 0.75rem;
+  text-align: center;
 }
