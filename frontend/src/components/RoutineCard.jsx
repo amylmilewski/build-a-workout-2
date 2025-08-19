@@ -1,6 +1,8 @@
 import useRoutinesContext from "../hooks/useRoutinesContext"
 import useAuthContext from "../hooks/useAuthContext"
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function RoutineCard ({ routine }) {
     const { dispatch } = useRoutinesContext()
     const { user } = useAuthContext()
@@ -10,7 +12,7 @@ export default function RoutineCard ({ routine }) {
             return
         }
         
-        const response = await fetch('http://localhost:4000/api/routines/' + routine._id, {
+        const response = await fetch(`${API_URL}/api/routines/` + routine._id, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${user.token}`

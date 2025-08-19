@@ -3,6 +3,9 @@ import useRoutinesContext from "../hooks/useRoutinesContext";
 import useExercisesContext from "../hooks/useExercisesContext";
 import useAuthContext from "../hooks/useAuthContext";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 export default function RoutineForm () {
     const { dispatch } = useRoutinesContext()
     const { user } = useAuthContext()
@@ -20,7 +23,7 @@ export default function RoutineForm () {
 
         if (!Array.isArray(exercises) || exercises.length === 0) { // guard with Array.isArray(exercises) before mapping to prevent the "map is not a function" crash 
             setIsLoading(true);
-            fetch('http://localhost:4000/api/exercises', {
+            fetch(`${API_URL}/api/exercises`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -49,7 +52,7 @@ export default function RoutineForm () {
 
         const routine = {title, user_id: user._id, exercises: selectedExercises};
 
-        const response = await fetch('http://localhost:4000/api/routines', {
+        const response = await fetch(`${API_URL}/api/routines`, {
          method: 'POST',
          body: JSON.stringify(routine),
          headers: {

@@ -2,6 +2,9 @@ import { useState } from "react"
 import useExercisesContext from '../hooks/useExercisesContext'
 import useAuthContext from "../hooks/useAuthContext";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 export default function ExerciseForm () {
     const { dispatch } = useExercisesContext()
     const { user } = useAuthContext()
@@ -23,7 +26,7 @@ export default function ExerciseForm () {
 
         const exercise = {title, sets, reps, load, user_id: user._id}
 
-        const response = await fetch('http://localhost:4000/api/exercises', {
+        const response = await fetch(`${API_URL}/api/exercises`, {
          method: 'POST',
          body: JSON.stringify(exercise),
          headers: {

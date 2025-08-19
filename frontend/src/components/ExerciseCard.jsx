@@ -1,6 +1,8 @@
 import useExercisesContext from "../hooks/useExercisesContext"
 import useAuthContext from "../hooks/useAuthContext"
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function ExerciseCard ({ exercise }) {
     const { dispatch } = useExercisesContext()
     const { user } = useAuthContext()
@@ -10,7 +12,7 @@ export default function ExerciseCard ({ exercise }) {
             return
         }
         
-        const response = await fetch('http://localhost:4000/api/exercises/' + exercise._id, {
+        const response = await fetch(`${API_URL}/api/exercises/` + exercise._id, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${user.token}`

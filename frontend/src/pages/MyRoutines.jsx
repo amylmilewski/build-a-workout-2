@@ -7,6 +7,7 @@ import useAuthContext from '../hooks/useAuthContext';
 import RoutineCard from '../components/RoutineCard';
 import RoutineForm from '../components/RoutineForm';
 
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function MyRoutines() {
     const {routines, dispatch} = useRoutinesContext()
@@ -15,7 +16,7 @@ export default function MyRoutines() {
 
     useEffect(() => {
         const fetchRoutines = async () => {
-            const response = await fetch('http://localhost:4000/api/routines/', {
+            const response = await fetch(`${API_URL}/api/routines/`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }

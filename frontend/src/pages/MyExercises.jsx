@@ -7,6 +7,8 @@ import useAuthContext from '../hooks/useAuthContext';
 import ExerciseCard from '../components/ExerciseCard'
 import ExerciseForm from '../components/ExerciseForm';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function MyExercises() {
     const {exercises, dispatch} = useExercisesContext()
 
@@ -14,7 +16,7 @@ export default function MyExercises() {
     
     useEffect(() => {
         const fetchExercises = async () => {
-            const response = await fetch('http://localhost:4000/api/exercises/', {
+            const response = await fetch(`${API_URL}/api/exercises/`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
