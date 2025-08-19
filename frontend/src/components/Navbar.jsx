@@ -2,6 +2,8 @@ import { Link, NavLink } from 'react-router-dom'
 import useAuthContext from '../hooks/useAuthContext'
 import { useLogout } from '../hooks/useLogout'
 
+import logo from '../assets/build_a_workout_logo.png'
+
 export default function Navbar () {
     const { logout } = useLogout()
     const { user } = useAuthContext()
@@ -13,7 +15,7 @@ export default function Navbar () {
     return (
         <>
             <header>
-                <Link to='/' className='site-title'><h1><img src="/src/assets/build_a_workout_logo.png" alt="" />Build-a-Workout</h1></Link>
+                <Link to='/' className='site-title'><h1><img src={logo} alt="Logo" />Build-a-Workout</h1></Link>
                 <nav>
                     {user && (
                         <div>
