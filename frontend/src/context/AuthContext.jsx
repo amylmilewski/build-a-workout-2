@@ -1,4 +1,4 @@
-import { createContext, useReducer, useEffect } from "react";
+import { createContext, useReducer, useState, useEffect } from "react";
 
 export const AuthContext = createContext()
 
@@ -17,6 +17,7 @@ export const AuthContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, {
         user: null
     })
+    const [loading, setLoading] = useState(true);
 
     // check for token in local storage (once) when the page first loads
     useEffect(() => {
@@ -26,13 +27,14 @@ export const AuthContextProvider = ({ children }) => {
         if (user) {
             dispatch({type: 'LOGIN', payload: user})
         }
+        setLoading(false);
     }, []) // otherwise, if no user in local storage, the user will stay null as defined above the useEffect
 
     console.log('AuthContext state: ', state)
 
     return (
         <AuthContext.Provider value={{...state, dispatch}}>
-            { children }
+            {loading ? <div>Loading...</div> : children}
         </AuthContext.Provider>
     )
 }
