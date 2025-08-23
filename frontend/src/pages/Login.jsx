@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
 import Navbar from "../components/Navbar";
+import { NavLink } from "react-router";
 
 export default function Login () {
     const [email, setEmail] = useState('')
@@ -34,7 +35,8 @@ export default function Login () {
                         value={password}
                     />
 
-                    <button disabled={isLoading}>Log in</button>
+                    <div className="login-signup">Don't have an account yet? <NavLink to='/signup'>Sign up</NavLink></div>
+                    <button>Log in</button>
                     {error && <div className="error">{error}</div>}
                 </form>
             </div>

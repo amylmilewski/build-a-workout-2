@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import { useSignup } from "../hooks/useSignup";
+import { NavLink } from "react-router";
 
 export default function Signup () {
     const [email, setEmail] = useState('')
@@ -34,6 +35,7 @@ export default function Signup () {
                         value={password}
                     />
 
+                    <div className="login-signup">Already have an account? <NavLink to='/login'>Log in</NavLink></div>
                     <button disabled={isLoading}>Sign Up</button>
                     {error && <div className="error">{error}</div>}
                 </form>

@@ -19,6 +19,7 @@ export default function Navbar () {
                 <nav>
                     {user && (
                         <div>
+                            <NavLink to='/'>Home</NavLink>
                             <NavLink to='/myroutines'>My Routines</NavLink>
                             <NavLink to='/myexercises'>My Exercises</NavLink>
                             <span>{user.email}</span>

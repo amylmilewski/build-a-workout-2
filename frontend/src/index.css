@@ -287,6 +287,29 @@ input.error {
   background-color: white;
 }
 
+.login-signup {
+  /* background-color: #93a7c2; */
+  /* padding: 0.5rem; */
+  /* margin-top: 1rem; */
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 1rem;
+}
+
+.login-signup a {
+  color: #c2683a;
+  /* margin-left: 0.5rem; */
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-signup a:hover {
+  text-decoration: underline;
+  color: #a5542e;
+}
+
 div.error {
   border: 2px solid red;
   background-color: rgb(255, 206, 206);
