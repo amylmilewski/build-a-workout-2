@@ -97,7 +97,7 @@ main {
 main.getting-started {
   display: flex;
   flex-direction: column;
-  gap: 3rem; /* space between sections */
+  /* gap: 3rem; space between sections */
   padding: 2rem;
 }
 
@@ -153,6 +153,11 @@ main.getting-started {
   height: auto;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.getting-started h4 {
+  text-align: center;
+  margin-top: 1.5rem;
 }
 
 @media (max-width: 768px) {
@@ -278,8 +283,8 @@ input.error {
 /* Login screen matches card styling */
 .login-container {
   max-width: 400px;
-  margin: 4rem auto;
-  padding: 20px;
+  margin: 0 auto;
+  padding: 0 20px 20px;
   border-radius: 4px;
 }
 
