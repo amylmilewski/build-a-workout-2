@@ -139,6 +139,14 @@ main.getting-started {
   gap: 1rem;
 }
 
+.getting-started .step-text a {
+  color: #c2683a;
+}
+
+.getting-started .step-text a:hover {
+  color: #a5542e;
+}
+
 /* Gif column */
 .getting-started .gif-column {
   display: flex;
@@ -325,4 +333,11 @@ div.error {
   color: red;
   font-size: 0.75rem;
   text-align: center;
+}
+
+div.status {
+  margin-top: 10px;
+  color: #555;
+  font-size: 0.9rem;
+  font-style: italic;
 }

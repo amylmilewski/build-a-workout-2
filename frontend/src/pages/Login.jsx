@@ -6,12 +6,19 @@ import { NavLink } from "react-router";
 export default function Login () {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [statusMessage, setStatusMessage] = useState("")
     const {login, error, isLoading} = useLogin()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        // Show a helpful message when login starts
+        setStatusMessage("Logging you in... this may take up to 30 seconds if the server is waking up.");
+
         await login(email, password)
+
+        // If login fails, clear the loading message (error will still show from useLogin)
+        setStatusMessage("")
     }
 
     return (
@@ -44,7 +51,11 @@ export default function Login () {
                     />
 
                     <div className="login-signup">Don't have an account yet? <NavLink to='/signup'>Sign up</NavLink></div>
-                    <button>Log in</button>
+
+                    <button disabled={isLoading}>{isLoading ? "Please wait..." : "Log in"}</button>
+
+                    {/* Dynamic feedback */}
+                    {statusMessage && <div className="status">{statusMessage}</div>}
                     {error && <div className="error">{error}</div>}
                 </form>
             </div>

@@ -34,7 +34,7 @@ function App() {
           <div className="step-text">
             <h2>Step 1: Add Exercises</h2>
             <ul>
-              <li>Go to the “Exercises” page and add a few moves you’d like to include.</li>
+              <li>Go to the <Link to='/myexercises'>My Exercises</Link> page and add a few moves you’d like to include.</li>
               <li>For each exercise, you can enter: <strong>Title, Sets, Reps, and Load (weight in lbs)</strong>.</li>
             </ul>
           </div>
@@ -49,7 +49,7 @@ function App() {
           <div className="step-text">
             <h2>Step 2: Build a Routine</h2>
             <ul>
-              <li>Once you’ve got some exercises, head over to “Routines.”</li>
+              <li>Once you’ve got some exercises, head over to <Link to='/myroutines'>My Routines</Link>.</li>
               <li>Give your routine a name (e.g., “Push Day” or “Full Body Quick Workout”).</li>
               <li>Select from the exercises you’ve added to build your custom routine:
                 <ul>
@@ -73,10 +73,14 @@ function App() {
           
         {/* Full-width: Notes */}
         <section className="full-width">
-          <h3>Notes & Tips:</h3>
+          <h3>Future Scope:</h3>
+          <p>Right now, routines and exercises can be <strong>created or deleted</strong>, but not edited (yet). Updates are on the way!</p>
+          <p><strong>Planned improvements and features for future versions include:</strong></p>
           <ul>
-            <li>Right now, routines and exercises can be <strong>created or deleted</strong>, but not edited (yet). Updates are on the way!</li>
-            <li>You’ll always need to be logged in to add or save exercises and routines.</li>
+            <li>Edit functionality for exercises and routines.</li>
+            <li>Ability to download routines (PDF or Notes app format).</li>
+            <li>To-do list style feature for exercises to check off sets in real time.</li>
+            <li>Ability to share routines with other users.</li>
           </ul>
         </section>
       </main>
