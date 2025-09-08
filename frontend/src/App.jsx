@@ -40,7 +40,7 @@ function App() {
           </div>
 
           <aside className="gif-column">
-            <img src="/Adding_Exercise.mov.gif" alt="Adding Exercise" className='tutorial-gif' />
+            <img src="/Build-a-Workout_Create_Exercise_Demo.gif" alt="Adding Exercise" className='tutorial-gif' />
           </aside>
         </section>
 
@@ -64,8 +64,32 @@ function App() {
 
           <aside className="gif-column">
             <img 
-              src="/Creating_Routine.mov.gif" 
+              src="/Build-a-Workout_Create_Routine_demo.gif" 
               alt="Creating Routine Tutorial" 
+              className="tutorial-gif"
+            />
+          </aside>
+        </section>
+
+        {/* Step 3 row */}
+        <section className="two-column">
+          <div className="step-text">
+            <h2>Step 3: Edit Your Exercises or Routines (*NEW!)</h2>
+            <p>Have you increased the load on an exercise or found something new to add to your routine? No problem! Exercise cards and routine cards are now both editable.</p>
+            <ul>
+              <li>To <strong>edit an exercise</strong>, click the "edit" button on that exercise card and make any changes you'd like to the Title, Sets, Reps, or Load (weight in lbs). Click <strong>Update Exercise</strong> to save your changes and see the new exercise card.
+                <ul>
+                  <li><strong>NOTE:</strong> Any changes you make to an exercise will automatically be reflected in any routines that include that exercise.</li>
+                </ul>
+              </li>
+              <li>Similarly, to <strong>edit a routine</strong>, click the "edit" button on that routine card and make the changes you want to the routine title or selection of exercises and then click <strong>Update Routine</strong> to save your changes and see the new routine card. </li>
+            </ul>
+          </div>
+
+          <aside className="gif-column">
+            <img 
+              src="/Build-a-Workout_Editing_Demo.gif" 
+              alt="Editing Exercise and Routine Tutorial" 
               className="tutorial-gif"
             />
           </aside>
@@ -74,10 +98,10 @@ function App() {
         {/* Full-width: Notes */}
         <section className="full-width">
           <h3>Future Scope:</h3>
-          <p>Right now, routines and exercises can be <strong>created or deleted</strong>, but not edited (yet). Updates are on the way!</p>
+          {/* <p>Right now, routines and exercises can be <strong>created or deleted</strong>, but not edited (yet). Updates are on the way!</p> */}
           <p><strong>Planned improvements and features for future versions include:</strong></p>
           <ul>
-            <li>Edit functionality for exercises and routines.</li>
+            {/* <li>Edit functionality for exercises and routines.</li> */}
             <li>Ability to download routines (PDF or Notes app format).</li>
             <li>To-do list style feature for exercises to check off sets in real time.</li>
             <li>Ability to share routines with other users.</li>

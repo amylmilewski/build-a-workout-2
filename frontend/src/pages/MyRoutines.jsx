@@ -15,25 +15,49 @@ export default function MyRoutines() {
     
     const { user } = useAuthContext() 
 
-    useEffect(() => {
-        const fetchRoutines = async () => {
-            const response = await fetch(`${API_URL}/api/routines/`, {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
+    // useEffect(() => {
+    //     if (!user) {
+    //         console.log('user is not ready yet');
+    //         return;
+    //     }
+
+    //     const fetchRoutines = async () => {
+    //         const response = await fetch(`${API_URL}/api/routines/`, {
+    //             headers: {
+    //                 'Authorization': `Bearer ${user.token}`
+    //             }
+    //         })
             
-            const json = await response.json()
+    //         const json = await response.json()
 
-            if (response.ok) {
-                dispatch({type: 'SET_ROUTINES', payload: json})
+    //         if (response.ok) {
+    //             dispatch({type: 'SET_ROUTINES', payload: json})
+    //         }
+    //     }
+
+    //     fetchRoutines()        
+    // }, [dispatch, user])
+
+    const fetchRoutines = async () => {
+        if (!user) return;
+
+        const response = await fetch(`${API_URL}/api/routines/`, {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
             }
-        }
+        });
+            
+        const json = await response.json()
 
-        if (user) {
-            fetchRoutines() // only attempt to fetch the routines if there's a value for the user
+        if (response.ok) {
+            dispatch({type: 'SET_ROUTINES', payload: json})
         }
-    }, [dispatch, user])
+    };
+
+    // initial load
+    useEffect(() => {
+        fetchRoutines();
+    }, [user]); // just depends on user
     
     return (
        <>
@@ -51,7 +75,10 @@ export default function MyRoutines() {
                 </div>
                 {user && <RoutineForm 
                     routineToEdit={routineToEdit}
-                    onFinish={() => setRoutineToEdit(null)} // clear after editing 
+                    onFinish={() => {
+                        setRoutineToEdit(null);
+                        fetchRoutines();
+                    }} // clear after editing 
                 />}
             </main>
        </>
