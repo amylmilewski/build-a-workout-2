@@ -6,13 +6,14 @@ import useAuthContext from "../hooks/useAuthContext";
 const API_URL = import.meta.env.VITE_API_URL;
 
 
-export default function RoutineForm () {
+export default function RoutineForm ({ routineToEdit, onFinish }) {
     const { dispatch } = useRoutinesContext()
     const { user } = useAuthContext()
 
     const { exercises, dispatch: dispatchExercises } = useExercisesContext()
-    const [title, setTitle] = useState('');
-    const [selectedExercises, setSelectedExercises] = useState([]);
+    const [title, setTitle] = useState(routineToEdit ? routineToEdit.title : '');
+    // const [selectedExercises, setSelectedExercises] = useState([]);
+    const [selectedExercises, setSelectedExercises] = useState(routineToEdit ? routineToEdit.selectedExercises : []);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [emptyFields, setEmptyFields] = useState([]);
@@ -42,6 +43,18 @@ export default function RoutineForm () {
         }
     }, [user, exercises, dispatchExercises]);
 
+    // Populate form when routineToEdit changes
+    useEffect(() => {
+        if (routineToEdit) {
+        setTitle(routineToEdit.title || '');
+        setSelectedExercises(routineToEdit.selectedExercises || []);
+        } else {
+            // reset when switching back to add mode
+            setTitle('');
+            setSelectedExercises([]);
+        }
+    }, [routineToEdit]);
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -52,8 +65,14 @@ export default function RoutineForm () {
 
         const routine = {title, user_id: user._id, exercises: selectedExercises};
 
-        const response = await fetch(`${API_URL}/api/routines`, {
-         method: 'POST',
+        const url = routineToEdit
+            ? `${API_URL}/api/routines/${routineToEdit._id}`
+            : `${API_URL}/api/routines`;
+
+        const method = routineToEdit ? 'PATCH' : 'POST';
+
+        const response = await fetch(url, {
+         method,
          body: JSON.stringify(routine),
          headers: {
             'Content-Type': 'application/json',
@@ -67,18 +86,30 @@ export default function RoutineForm () {
             setEmptyFields(json.emptyFields);
         }
         if (response.ok) {
-            setTitle('')
-            setSelectedExercises([])
+            if (routineToEdit) {
+                console.log('dispatching UPDATE_ROUTINE with', json);
+                dispatch({ type: 'UPDATE_ROUTINE', payload: json });
+                console.log('routine updated', json)
+            } else {
+                dispatch({ type: 'CREATE_ROUTINE', payload: json });
+                console.log('new routine added', json)
+
+                // reset form only if creating
+                setTitle('');
+                setSelectedExercises([]);
+            }
+            
             setError(null)
             setEmptyFields([])
-            console.log('new routine added', json)
-            dispatch({type: 'CREATE_ROUTINE', payload: json});
+
+            if (onFinish) onFinish(); // clears edit mode
+
         }
     };
 
     return (
         <form className="form-panel" onSubmit={handleSubmit}>
-            <h1>Create a New Routine</h1>
+            <h1>{routineToEdit ? 'Edit Routine' : 'Create a New Routine'}</h1>
 
             <label>Routine Title:</label>
             <input 
@@ -106,7 +137,7 @@ export default function RoutineForm () {
                     ))}
                 </select>
             )}
-            <button>Create Routine</button>
+            <button>{routineToEdit ? 'Update Routine' : 'Create Routine'}</button>
             {error && <div className="error">{error}</div>}
         </form>
     )

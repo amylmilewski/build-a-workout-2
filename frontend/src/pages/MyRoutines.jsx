@@ -10,6 +10,7 @@ import RoutineForm from '../components/RoutineForm';
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function MyRoutines() {
+    const [routineToEdit, setRoutineToEdit] = useState(null);
     const {routines, dispatch} = useRoutinesContext()
     
     const { user } = useAuthContext() 
@@ -41,10 +42,17 @@ export default function MyRoutines() {
             <main>
                 <div>
                     {routines && routines.map((routine) => (
-                        <RoutineCard key={routine._id} routine={routine} />
+                        <RoutineCard 
+                            key={routine._id} 
+                            routine={routine} 
+                            onEdit={() => setRoutineToEdit(routine)} // <-- open form with data
+                        />
                     ))}
                 </div>
-                {user && <RoutineForm />}
+                {user && <RoutineForm 
+                    routineToEdit={routineToEdit}
+                    onFinish={() => setRoutineToEdit(null)} // clear after editing 
+                />}
             </main>
        </>
     )
