@@ -3,11 +3,11 @@ import useAuthContext from "../hooks/useAuthContext"
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function ExerciseCard ({ exercise }) {
+export default function ExerciseCard ({ exercise, onEdit }) {
     const { dispatch } = useExercisesContext()
     const { user } = useAuthContext()
     
-    const handleClick = async () => {
+    const handleDelete = async () => {
         if (!user) {
             return
         }
@@ -25,6 +25,7 @@ export default function ExerciseCard ({ exercise }) {
         }
     }
 
+
     return (
         <>
             <div className="card exercise-card">
@@ -32,7 +33,10 @@ export default function ExerciseCard ({ exercise }) {
                 <p><strong>Sets: </strong>{exercise.sets}</p>
                 <p><strong>Reps: </strong>{exercise.reps}</p>
                 <p><strong>Load (lb): </strong>{exercise.load}</p>
-                <button onClick={handleClick}>delete</button>
+                <div className="actions">
+                    <button onClick={onEdit}>edit</button>
+                    <button onClick={handleDelete}>delete</button>
+                </div>
             </div>
         </>
     )

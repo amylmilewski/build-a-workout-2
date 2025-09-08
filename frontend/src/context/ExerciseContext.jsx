@@ -17,6 +17,12 @@ export const exercisesReducer = (state, action) => {
             return {
                 exercises: [action.payload, ...state.exercises] // action.payload is a single new exercise object
             }
+        case 'UPDATE_EXERCISE':
+            return {
+                ...state,
+                exercises: state.exercises.map((e) =>
+                e._id === action.payload._id ? action.payload : e)
+            }
         case 'DELETE_EXERCISE':
             return {
                 exercises: state.exercises.filter((e) => e._id !== action.payload._id)

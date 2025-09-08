@@ -10,6 +10,7 @@ import ExerciseForm from '../components/ExerciseForm';
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function MyExercises() {
+    const [exerciseToEdit, setExerciseToEdit] = useState(null);
     const {exercises, dispatch} = useExercisesContext()
 
     const { user } = useAuthContext()
@@ -40,10 +41,17 @@ export default function MyExercises() {
             <main>
                 <div>
                     {exercises && exercises.map((exercise) => (
-                        <ExerciseCard key={exercise._id} exercise={exercise} />
+                        <ExerciseCard 
+                            key={exercise._id} 
+                            exercise={exercise}
+                            onEdit={() => setExerciseToEdit(exercise)} // <-- open form with data 
+                        />
                     ))}
                 </div>
-                <ExerciseForm />
+                <ExerciseForm
+                    exerciseToEdit={exerciseToEdit}
+                    onFinish={() => setExerciseToEdit(null)} // clear after editing 
+                />
             </main>
             
         </>

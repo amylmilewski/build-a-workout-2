@@ -211,10 +211,10 @@ main.getting-started {
   margin-right: 2.5rem;
 }
 
-.card button {
+/* .card button {
   position: absolute;
-  top: 1.25rem;   /* matches card padding */
-  right: 1.25rem; /* matches card padding */
+  top: 1.25rem;   
+  right: 1.25rem; 
   background-color: transparent;
   border: none;
   font-size: 1.1rem;
@@ -223,6 +223,26 @@ main.getting-started {
 }
 
 .card button:hover {
+  color: #c2683a; 
+} */
+
+.card .actions {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  display: flex;
+  gap: 0.5rem; /* space between buttons */
+}
+
+.card .actions button {
+  background-color: transparent;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #1f2937;
+}
+
+.card .actions button:hover {
   color: #c2683a; /* accent color on hover */
 }
 
