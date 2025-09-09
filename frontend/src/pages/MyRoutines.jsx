@@ -10,29 +10,54 @@ import RoutineForm from '../components/RoutineForm';
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function MyRoutines() {
+    const [routineToEdit, setRoutineToEdit] = useState(null);
     const {routines, dispatch} = useRoutinesContext()
     
     const { user } = useAuthContext() 
 
-    useEffect(() => {
-        const fetchRoutines = async () => {
-            const response = await fetch(`${API_URL}/api/routines/`, {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
+    // useEffect(() => {
+    //     if (!user) {
+    //         console.log('user is not ready yet');
+    //         return;
+    //     }
+
+    //     const fetchRoutines = async () => {
+    //         const response = await fetch(`${API_URL}/api/routines/`, {
+    //             headers: {
+    //                 'Authorization': `Bearer ${user.token}`
+    //             }
+    //         })
             
-            const json = await response.json()
+    //         const json = await response.json()
 
-            if (response.ok) {
-                dispatch({type: 'SET_ROUTINES', payload: json})
+    //         if (response.ok) {
+    //             dispatch({type: 'SET_ROUTINES', payload: json})
+    //         }
+    //     }
+
+    //     fetchRoutines()        
+    // }, [dispatch, user])
+
+    const fetchRoutines = async () => {
+        if (!user) return;
+
+        const response = await fetch(`${API_URL}/api/routines/`, {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
             }
-        }
+        });
+            
+        const json = await response.json()
 
-        if (user) {
-            fetchRoutines() // only attempt to fetch the routines if there's a value for the user
+        if (response.ok) {
+            dispatch({type: 'SET_ROUTINES', payload: json})
         }
-    }, [dispatch, user])
+    };
+
+    // initial load
+    useEffect(() => {
+        fetchRoutines();
+    }, [user]); // just depends on user
     
     return (
        <>
@@ -41,10 +66,20 @@ export default function MyRoutines() {
             <main>
                 <div>
                     {routines && routines.map((routine) => (
-                        <RoutineCard key={routine._id} routine={routine} />
+                        <RoutineCard 
+                            key={routine._id} 
+                            routine={routine} 
+                            onEdit={() => setRoutineToEdit(routine)} // <-- open form with data
+                        />
                     ))}
                 </div>
-                {user && <RoutineForm />}
+                {user && <RoutineForm 
+                    routineToEdit={routineToEdit}
+                    onFinish={() => {
+                        setRoutineToEdit(null);
+                        fetchRoutines();
+                    }} // clear after editing 
+                />}
             </main>
        </>
     )

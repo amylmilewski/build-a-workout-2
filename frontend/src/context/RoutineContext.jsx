@@ -17,6 +17,12 @@ export const routinesReducer = (state, action) => {
             return {
                 routines: [action.payload, ...state.routines] // action.payload is a single new routine object
             }
+        case 'UPDATE_ROUTINE':
+            return {
+                ...state,
+                routines: state.routines.map((r) =>
+                r._id === action.payload._id ? action.payload : r)
+            }
         case 'DELETE_ROUTINE':
             return {
                 routines: state.routines.filter((r) => r._id !== action.payload._id)

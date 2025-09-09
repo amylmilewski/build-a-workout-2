@@ -3,11 +3,11 @@ import useAuthContext from "../hooks/useAuthContext"
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function RoutineCard ({ routine }) {
+export default function RoutineCard ({ routine, onEdit }) {
     const { dispatch } = useRoutinesContext()
     const { user } = useAuthContext()
     
-    const handleClick = async () => {
+    const handleDelete = async () => {
         if (!user) {
             return
         }
@@ -41,7 +41,10 @@ export default function RoutineCard ({ routine }) {
                         </div>
                     ))}
                 </div>
-                <button onClick={handleClick}>delete</button>
+                <div className="actions">
+                    <button onClick={onEdit}>edit</button>
+                    <button onClick={handleDelete}>delete</button>
+                </div>
             </div>
         </>
     )

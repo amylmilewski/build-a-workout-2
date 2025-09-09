@@ -96,9 +96,11 @@ const updateExercise = async (req, res) => {
         return res.status(404).json({error: 'No such exercise'})
     }
 
-    const exercise = await Exercise.findOneAndUpdate({_id: id}, {
-        ...req.body
-    }) // first argument is the "find criteria" (based on ID), second argument is an object that represents the updates to be made
+    const exercise = await Exercise.findOneAndUpdate(
+        {_id: id}, 
+        {...req.body},
+        { new: true } // return updated doc
+    ) // first argument is the "find criteria" (based on ID), second argument is an object that represents the updates to be made
 
      // if an exercise at that ID cannot be found, return an error
     if (!exercise) {
