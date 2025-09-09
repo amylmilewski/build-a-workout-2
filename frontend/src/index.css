@@ -12,13 +12,14 @@ body {
   line-height: 1.5;
 }
 
-/* Header */
+/* Header (default: desktop layout) */
 header {
   background-color: #1f2937;
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; /* allows wrapping when needed */
 }
 
 .site-title {
@@ -43,6 +44,12 @@ header {
 }
 
 nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* so links don’t overflow */
+}
+
+nav div {
   display: flex;
   align-items: center;
 }
@@ -83,12 +90,57 @@ nav button:hover {
   background-color: #a5542e;
 }
 
+/* ===== Mobile layout (under 768px) ===== */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column; /* stack everything vertically */
+    align-items: flex-start; /* left-align instead of centered */
+  }
+
+  .site-title {
+    margin-bottom: 0.5rem; /* spacing after logo/title row */
+  }
+
+  nav {
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* stack the two rows of nav divs */
+  }
+
+  nav div {
+    display: flex;
+    justify-content: flex-start; /* align children side-by-side */
+    flex-wrap: wrap; /* allows wrapping if space runs out */
+    row-gap: 1.25rem; /* spacing between rows */
+  }
+
+  nav a,
+  nav span,
+  nav button {
+    margin-left: 0; /* reset the desktop spacing */
+    margin-right: 1rem; /* spacing between items instead */
+  }
+}
+
 /* Pages layout */
 main {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 2rem;
   padding: 2rem;
+}
+
+/* Mobile: stack in one column */
+@media (max-width: 768px) {
+  main {
+    grid-template-columns: 1fr; /* single column */
+  }
+
+  .form-panel {
+    order: -1;       /* put the form above the cards */
+    width: 100%;     /* full width */
+    margin-bottom: 1rem;
+  }
 }
 
 .page-title {
@@ -248,6 +300,23 @@ main.getting-started {
 
 .card .actions button:hover {
   color: #c2683a; /* accent color on hover */
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding-top: 1.25rem; /* no need to leave extra room for abs buttons */
+  }
+
+  .card .actions {
+    position: static;         /* stop overlapping */
+    /* margin-bottom: 0.5rem;     */
+    justify-content: flex-end;/* or flex-start if you prefer left aligned */
+  }
+
+  .card h1,
+  .card h2 {
+    margin-right: 0; /* remove desktop margin reserved for buttons */
+  }
 }
 
 /* Form panel */
