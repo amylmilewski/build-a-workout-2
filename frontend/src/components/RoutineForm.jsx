@@ -126,6 +126,7 @@ export default function RoutineForm ({ routineToEdit, onFinish }) {
                 <select
                     name="exercises"
                     multiple
+                    value={selectedExercises}
                     onChange={(e) => {
                         const selectedOptions = Array.from(e.target.selectedOptions)
                         const selectedValues = selectedOptions.map(option => option.value)
