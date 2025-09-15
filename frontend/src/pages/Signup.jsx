@@ -3,6 +3,37 @@ import Navbar from "../components/Navbar";
 import { useSignup } from "../hooks/useSignup";
 import { NavLink } from "react-router";
 
+// Validation function (used on submit)
+function validatePassword(password) {
+  // Rules: min 8 chars, at least one uppercase, one number, one special char
+  const minLength = /.{8,}/;
+  const uppercase = /[A-Z]/;
+  const number = /[0-9]/;
+  const specialChar = /[!@#$%^&*]/;
+
+  if (!minLength.test(password)) {
+    return "Password must be at least 8 characters long.";
+  }
+  if (!uppercase.test(password)) {
+    return "Password must contain at least one uppercase letter.";
+  }
+  if (!number.test(password)) {
+    return "Password must contain at least one number.";
+  }
+  if (!specialChar.test(password)) {
+    return "Password must contain at least one special character.";
+  }
+  return null; // means it's valid
+}
+
+// Rules for live feedback (used in render)
+const passwordRules = [
+  { test: /.{8,}/, message: "At least 8 characters" },
+  { test: /[A-Z]/, message: "At least one uppercase letter" },
+  { test: /[0-9]/, message: "At least one number" },
+  { test: /[!@#$%^&*]/, message: "At least one special character (!@#$%^&*)" }
+];
+
 export default function Signup () {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -10,9 +41,14 @@ export default function Signup () {
     const {signup, error, isLoading} = useSignup()
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
-        // Show a helpful message when signup starts
+        const validationError = validatePassword(password);
+        if (validationError) {
+            setStatusMessage(""); // clear the "loading" message
+            return setStatusMessage(validationError); // show validation feedback
+        }
+        
         setStatusMessage("Signing you up and logging you in... this may take up to 30 seconds if the server is waking up.");
         
         await signup(email, password)
@@ -49,6 +85,16 @@ export default function Signup () {
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
                     />
+                    <div className="password-checklist">
+                    {passwordRules.map((rule, index) => {
+                        const passed = rule.test.test(password);
+                        return (
+                        <div key={index} className={passed ? "rule passed" : "rule"}>
+                            {passed ? "✅" : "❌"} {rule.message}
+                        </div>
+                        );
+                    })}
+                    </div>
 
                     <div className="login-signup">Already have an account? <NavLink to='/login'>Log in</NavLink></div>
 

@@ -381,6 +381,25 @@ input.error {
   border: 1px solid red;
 }
 
+.empty-state {
+  margin-bottom: 1rem;
+  color: #555;
+  font-size: 0.9rem;
+  /* font-style: italic; */
+}
+
+.empty-state a{
+  color: #c2683a;
+  /* margin-left: 0.5rem; */
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.empty-state a:hover {
+  text-decoration: underline;
+  color: #a5542e;
+}
+
 /* Login screen matches card styling */
 .login-container {
   max-width: 400px;
@@ -433,4 +452,21 @@ div.status {
   color: #555;
   font-size: 0.9rem;
   font-style: italic;
+}
+
+.password-checklist {
+  margin-top: 6px;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.password-checklist .rule {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.password-checklist .passed {
+  color: green;
 }
