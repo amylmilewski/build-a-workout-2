@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-// this schema defines the structure of a particular exercise document saved to the collection
+// this schema defines the structure of a particular routine document saved to the collection
 const routineSchema = new Schema({
     title: {
         type: String,

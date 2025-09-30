@@ -16,7 +16,7 @@ const loginUser = async (req, res) => {
         // create a token (the id of the user document just created above is included in the payload)
         const token = createToken(user._id)
 
-        res.status(200).json({email, token}) // pass the token back to the browser, effectively authenticating them right away after signing up
+        res.status(200).json({email, token}) // pass the token back to the browser
     } catch (error) {
         res.status(400).json({error: error.message})
     }
