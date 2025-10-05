@@ -1,38 +1,43 @@
 // load environment variables from a .env file into process.env
 require('dotenv').config()
 
-const express = require('express')
-const cors = require('cors');
+// const express = require('express')
+// const cors = require('cors');
 const mongoose = require('mongoose')
-const exerciseRoutes = require('./routes/exercises')
-const routineRoutes = require('./routes/routines')
-const userRoutes = require('./routes/user')
-const PORT = process.env.PORT || 4000;
+// const exerciseRoutes = require('./routes/exercises')
+// const routineRoutes = require('./routes/routines')
+// const userRoutes = require('./routes/user')
+// const PORT = process.env.PORT || 4000;
 
-const app = express()
+// const app = express()
 
 // global middleware that fires for every request that comes in
-app.use(cors()); // Enables CORS for all routes and origins
-app.use(express.json())
+// app.use(cors()); 
+// Enables CORS for all routes and origins
+// app.use(express.json())
 
-app.use((req, res, next) => {
-    console.log(req.path, req.method)
-    next()
-})
+// app.use((req, res, next) => {
+//     console.log(req.path, req.method)
+//     next()
+// })
 
 // "registering routes" (attaches all routes from the express router to the end of the '/api/...' path)
-app.use('/api/exercises', exerciseRoutes)
-app.use('/api/routines', routineRoutes)
-app.use('/api/user', userRoutes)
+// app.use('/api/exercises', exerciseRoutes)
+// app.use('/api/routines', routineRoutes)
+// app.use('/api/user', userRoutes)
 
 // connect to db (this is asynchronous so it returns a promise) with connection string (MONGO_URI)
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => {
-        // listen for requests (only once we're connected to the database)
-        app.listen(PORT, () => {
-            console.log('connected to db, listening on port', PORT)
+// BUT only connect + listen if not in test environment
+if (process.env.NODE_ENV !== 'test') {
+    mongoose.connect(process.env.MONGO_URI)
+        .then(() => {
+            // listen for requests (only once we're connected to the database)
+            const PORT = process.env.PORT || 4000;
+            app.listen(PORT, () => {
+                console.log('connected to db, listening on port', PORT);
+            })
         })
-    })
-    .catch((error) => {
-        console.log(error)
-    })
+        .catch((error) => {
+            console.log(error);
+        });
+}
