@@ -43,6 +43,12 @@ export default function Signup () {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Trim to avoid false passes with just spaces
+        if (!email.trim() || !password.trim()) {
+          setStatusMessage(""); // clear any "loading" message
+          return setStatusMessage("Please fill in both email and password.");
+        }
+
         const validationError = validatePassword(password);
         if (validationError) {
             setStatusMessage(""); // clear the "loading" message

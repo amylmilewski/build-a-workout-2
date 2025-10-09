@@ -12,6 +12,12 @@ export default function Login () {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        // Trim to avoid false passes with just spaces
+        if (!email.trim() || !password.trim()) {
+          setStatusMessage(""); // clear any "loading" message
+          return setStatusMessage("Please fill in both email and password.");
+        }
+
         // Show a helpful message when login starts
         setStatusMessage("Logging you in... this may take up to 30 seconds if the server is waking up.");
 
